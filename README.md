@@ -133,6 +133,4 @@ This project is for educational purposes only. The vulnerabilities demonstrated 
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](issues).
